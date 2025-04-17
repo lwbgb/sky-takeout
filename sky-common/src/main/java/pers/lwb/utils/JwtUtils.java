@@ -3,10 +3,8 @@ package pers.lwb.utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.MacAlgorithm;
-import io.jsonwebtoken.security.SignatureAlgorithm;
 
 import javax.crypto.SecretKey;
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Map;
 

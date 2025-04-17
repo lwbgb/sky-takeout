@@ -6,5 +6,5 @@ import pers.lwb.entity.Employee;
 @Mapper
 public interface EmployeeMapper {
 
-    public Employee getByUername(String username);
+    Employee getByUername(String username);
 }

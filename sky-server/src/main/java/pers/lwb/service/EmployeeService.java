@@ -5,5 +5,5 @@ import pers.lwb.entity.Employee;
 
 public interface EmployeeService {
 
-    public Employee login(EmployeeLoginDTO employeeLoginDTO);
+    Employee login(EmployeeLoginDTO employeeLoginDTO);
 }

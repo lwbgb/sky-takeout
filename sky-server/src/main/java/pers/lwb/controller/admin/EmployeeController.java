@@ -1,6 +1,7 @@
 package pers.lwb.controller.admin;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,7 @@ public class EmployeeController {
         this.properties = properties;
     }
 
+
     @PostMapping("/login")
     public Result<EmployeeLoginVO> login(@RequestBody EmployeeLoginDTO employeeLoginDTO) {
         log.info("员工登录：{}", employeeLoginDTO);
@@ -40,6 +42,8 @@ public class EmployeeController {
         claims.put(JwtClaimsConstant.EMP_ID, employee.getId());
 
         String jws = JwtUtils.createJws(claims, properties.getAdminTtl());
+
+        log.info("生成 JWT令牌：{}", jws);
 
         EmployeeLoginVO employeeLoginVO = EmployeeLoginVO.builder()
                 .id(employee.getId())

@@ -10,24 +10,26 @@ spring:
   main:
     allow-circular-references: true
   datasource:
-    druid:
-      driver-class-name: ${sky.datasource.driver-class-name}
-      url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
-      username: ${sky.datasource.username}
-      password: ${sky.datasource.password}
+#    druid:
+    driver-class-name: ${sky.datasource.driver-class-name}
+    url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${sky.datasource.username}
+    password: ${sky.datasource.password}
 
 mybatis:
   #mapper配置文件
-  mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.sky.entity
+  mapper-locations: classpath:pers/lwb/mapper/*.xml
+  type-aliases-package: pers.lwb.entity
   configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     #开启驼峰命名
     map-underscore-to-camel-case: true
 
 logging:
   level:
-    com:
-      sky:
+    org.springframework.jdbc.support.JdbcTransactionManager: debug
+    pers:
+      lwb:
         mapper: debug
         service: info
         controller: info

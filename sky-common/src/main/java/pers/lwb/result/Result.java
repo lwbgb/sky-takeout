@@ -33,4 +33,8 @@ public class Result<T> implements Serializable {
     public static <T> Result<T> error() {
         return new Result<>(0, null, "error");
     }
+
+    public static <T> Result<T> error(String msg) {
+        return new Result<>(0, null, msg);
+    }
 }
