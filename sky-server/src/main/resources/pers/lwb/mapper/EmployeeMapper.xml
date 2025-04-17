@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pers.lwb.mapper.EmployeeMapper">
+
+    <sql id="selectAll">
+        select id, name, username, password, phone, sex, id_number, status, create_time, update_time, create_user, update_user
+        from employee
+    </sql>
+
+
+    <select id="getByUername" resultType="pers.lwb.entity.Employee">
+        <include refid="selectAll"/>
+        where username = #{usernmae}
+    </select>
+</mapper>
