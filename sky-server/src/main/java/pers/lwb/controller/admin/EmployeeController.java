@@ -43,7 +43,7 @@ public class EmployeeController {
 
         String jws = JwtUtils.createJws(claims, properties.getAdminTtl());
 
-        log.info("生成 JWT令牌：{}", jws);
+        log.info("登录成功！生成 JWT令牌：{}", jws);
 
         EmployeeLoginVO employeeLoginVO = EmployeeLoginVO.builder()
                 .id(employee.getId())

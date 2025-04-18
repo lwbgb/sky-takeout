@@ -11,7 +11,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public Result<String> catchExp(Exception e) {
-//        log.info("全局异常处理器捕获到异常信息：{}", e.getMessage());
+        log.info("GlobalExceptionHandler caught exception：{}", e.getMessage());
         return Result.error(e.getMessage());
     }
 }

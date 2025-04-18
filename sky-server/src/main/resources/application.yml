@@ -5,12 +5,13 @@ server:
   port: 8080
 
 spring:
+  #  开启 dev 配置类生效
   profiles:
     active: dev
   main:
     allow-circular-references: true
   datasource:
-#    druid:
+    #    druid:
     driver-class-name: ${sky.datasource.driver-class-name}
     url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
     username: ${sky.datasource.username}
@@ -21,7 +22,7 @@ mybatis:
   mapper-locations: classpath:pers/lwb/mapper/*.xml
   type-aliases-package: pers.lwb.entity
   configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     #开启驼峰命名
     map-underscore-to-camel-case: true
 
@@ -37,7 +38,7 @@ logging:
 sky:
   jwt:
     # 设置jwt签名加密时使用的秘钥
-#    admin-secret-key: sayuri
+    #    admin-secret-key: sayuri
     # 设置jwt过期时间
     admin-ttl: 7200
     # 设置前端传递过来的令牌名称
