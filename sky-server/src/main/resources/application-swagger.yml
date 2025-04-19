@@ -1,0 +1,13 @@
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+  api-docs:
+    version: openapi_3_0
+    enabled: true
+    path: /v3/api-docs
+  group-configs:
+    - group: "admin-employee"
+      display-name: "管理员"
+      packages-to-scan:
+        - pers.lwb.controller

@@ -24,4 +24,5 @@ public class WebMvcConstruction extends WebMvcConfigurationSupport {
                 .addPathPatterns("/admin/**")
                 .excludePathPatterns("/admin/employee/login");
     }
+
 }
