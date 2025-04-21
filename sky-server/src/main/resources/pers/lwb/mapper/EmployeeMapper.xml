@@ -25,11 +25,27 @@
         insert into employee(id, name, username, password, phone, sex, id_number, status,
                              create_time, update_time, create_user, update_user)
         values (#{id}, #{name}, #{username}, #{password}, #{phone}, #{sex}, #{idNumber}, #{status},
-                #{createTime}, #{updateTime}, #{createUser}, #{updateUser})
+                #{createTime}, #{updateTime}, #{createUser}, #{updateTime})
     </insert>
 
+    <!--根据用户名查询员工-->
     <select id="getByUername" resultType="pers.lwb.entity.Employee">
         <include refid="selectAll"/>
         where username = #{usernmae}
+    </select>
+
+    <!--分页查询-->
+    <select id="page" resultType="pers.lwb.entity.Employee">
+        <include refid="selectAll"/>
+        limit #{start}, #{pageSize}
+    </select>
+
+    <!--根据姓名查询员工-->
+    <select id="list" resultType="pers.lwb.entity.Employee">
+        <include refid="selectAll"/>
+        <where>
+            <if test="name != null and name != ''">name like concat('%', #{name}, '%')</if>
+        </where>
+        order by create_time desc
     </select>
 </mapper>

@@ -1,5 +1,7 @@
 package pers.lwb.service.Impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -13,8 +15,10 @@ import pers.lwb.exception.EmployeeInsertException;
 import pers.lwb.exception.PasswordErrorException;
 import pers.lwb.mapper.EmployeeMapper;
 import pers.lwb.service.EmployeeService;
+import pers.lwb.vo.EmployeePageVO;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -74,4 +78,25 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new EmployeeInsertException(MessageConstant.EMPLOYEE_INSERT_ERROR);
         return true;
     }
+
+    /**
+     * 分页查询
+     * @param name      员工姓名
+     * @param pageNum   页数
+     * @param pageSize  查询条数
+     * @return  查询结果
+     */
+    @Override
+    public EmployeePageVO page(String name, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Employee> list = mapper.list(name);
+        Page<Employee> page = (Page<Employee>) list;
+        return new EmployeePageVO(page.getTotal(), page.getResult());
+    }
 }
+
+
+
+
+
+

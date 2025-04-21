@@ -55,6 +55,14 @@ public class JwtUtils {
         return claims;
     }
 
+
+    /**
+     * JWE 令牌生成
+     * @param secretKey 自定义秘钥
+     * @param claims    键值对信息
+     * @param seconds   令牌声明周期（s）
+     * @return          JWE 令牌
+     */
     public static String createJwe(String secretKey, Map<String, Object> claims, long seconds) {
         Password password = Keys.password(secretKey.toCharArray());
 
@@ -74,6 +82,12 @@ public class JwtUtils {
         return jwe;
     }
 
+    /**
+     * 解析 JWE 令牌
+     * @param jwe       JWE 令牌
+     * @param secretKey 自定义秘钥
+     * @return          键值对信息
+     */
     public static Claims parseJwe(String jwe, String secretKey) {
         Password password = Keys.password(secretKey.toCharArray());
 

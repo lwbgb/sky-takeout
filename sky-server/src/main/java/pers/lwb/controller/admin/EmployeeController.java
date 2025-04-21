@@ -5,15 +5,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pers.lwb.constant.JwtClaimsConstant;
 import pers.lwb.dto.EmployeeDTO;
 import pers.lwb.dto.EmployeeLoginDTO;
+import pers.lwb.dto.EmployeePageDTO;
 import pers.lwb.entity.Employee;
 import pers.lwb.exception.BaseException;
 import pers.lwb.properties.JwtProperties;
@@ -21,6 +20,7 @@ import pers.lwb.result.Result;
 import pers.lwb.service.EmployeeService;
 import pers.lwb.utils.JwtUtils;
 import pers.lwb.vo.EmployeeLoginVO;
+import pers.lwb.vo.EmployeePageVO;
 
 import java.util.HashMap;
 
@@ -82,6 +82,14 @@ public class EmployeeController {
 
         boolean res = employeeService.insert(employee);
         return res ? Result.success("新增员工成功！") : Result.error("新增员工失败！");
+    }
+
+    @Operation(summary = "员工分页查询")
+    @GetMapping("/page")
+    public Result<EmployeePageVO> page(@ParameterObject EmployeePageDTO employeePageDTO) {
+        log.info("员工分页查询：{}", employeePageDTO);
+        EmployeePageVO pageVO = employeeService.page(employeePageDTO.getName(), employeePageDTO.getPage(), employeePageDTO.getPageSize());
+        return Result.success(pageVO);
     }
 }
 
