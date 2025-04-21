@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "sky.jwt")
 public class JwtProperties {
-//    private String adminSecretKey;
+    private String adminSecretKey;
     private Long adminTtl;
     private String adminTokenName;
 }

@@ -3,13 +3,14 @@ package pers.lwb.config;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+@Slf4j
 @Configuration
-@EnableWebMvc // TODO Swagger 配置类生效问题
-public class SwaggerConfig {
+//@EnableWebMvc // TODO Swagger 配置类生效问题，开启后可启用 swagger 页面，但关闭 Knif4j
+public class SwaggerConfig  {
 
 //    @Bean
 //    public GlobalOpenApiCustomizer orderGlobalOpenApiCustomizer() {

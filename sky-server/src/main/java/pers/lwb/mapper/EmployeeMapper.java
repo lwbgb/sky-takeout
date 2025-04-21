@@ -7,4 +7,6 @@ import pers.lwb.entity.Employee;
 public interface EmployeeMapper {
 
     Employee getByUername(String username);
+
+    int insert(Employee employee);
 }

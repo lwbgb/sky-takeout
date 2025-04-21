@@ -1,5 +1,6 @@
 package pers.lwb.result;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 @Data
+@Schema(title = "响应结果封装类", description = "返回给客户端的结果封装类")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Result<T> implements Serializable {
