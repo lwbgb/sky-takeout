@@ -1,6 +1,7 @@
 package pers.lwb.interceptor;
 
 import com.alibaba.druid.util.StringUtils;
+import com.alibaba.fastjson.JSONObject;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,8 +11,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import pers.lwb.constant.JwtClaimsConstant;
+import pers.lwb.constant.MessageConstant;
 import pers.lwb.context.LocalContext;
 import pers.lwb.properties.JwtProperties;
+import pers.lwb.result.Result;
 import pers.lwb.utils.JwtUtils;
 
 @Slf4j
@@ -39,7 +42,8 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         // 判断 jwe 是否为空（客户端还未获取 JWT 令牌）
         if (StringUtils.isEmpty(jwe)) {
             log.info("客户端尚未获取 JWT 令牌！");
-            response.setStatus(401);
+            String res = JSONObject.toJSONString(Result.error(MessageConstant.USER_NOT_LOGIN));
+            response.getWriter().write(res);
             return false;
         }
         log.info("开始校验 JWT 令牌：{}", jwe);
@@ -50,7 +54,8 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             claims = JwtUtils.parseJwe(jwe, properties.getAdminSecretKey());
         } catch (JwtException e) {
             log.info("JWT 令牌校验失败！");
-            response.setStatus(401);
+            String res = JSONObject.toJSONString(Result.error(MessageConstant.PASSWORD_ERROR));
+            response.getWriter().write(res);
             return false;
         }
 

@@ -17,4 +17,6 @@ public interface EmployeeMapper {
     List<Employee> page(Integer start, Integer pageSize);
 
     int update(Employee employee);
+
+    Employee getById(Long id);
 }

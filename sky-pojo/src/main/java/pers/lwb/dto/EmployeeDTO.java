@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EmployeeDTO {
 
+    @Schema(title = "员工 id")
+    private Long id;
+
     @Schema(title = "员工姓名", defaultValue = "sayuri")
     private String name;
 

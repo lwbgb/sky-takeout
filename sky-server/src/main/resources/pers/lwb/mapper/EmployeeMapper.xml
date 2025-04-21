@@ -63,4 +63,10 @@
         </where>
         order by create_time desc
     </select>
+
+    <!--根据 ID 查询员工-->
+    <select id="getById" resultType="pers.lwb.entity.Employee">
+        <include refid="selectAll"/>
+        where id = #{id}
+    </select>
 </mapper>

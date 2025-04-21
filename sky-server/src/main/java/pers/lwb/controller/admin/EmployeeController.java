@@ -81,8 +81,8 @@ public class EmployeeController {
         employee.setCreateUser(empId);
         employee.setUpdateUser(empId);
 
-        boolean res = employeeService.insert(employee);
-        return res ? Result.success(MessageConstant.EMPLOYEE_INSERT_SUCCESS) : Result.error(MessageConstant.EMPLOYEE_INSERT_ERROR);
+        employeeService.insert(employee);
+        return Result.success(MessageConstant.EMPLOYEE_INSERT_SUCCESS);
     }
 
     @Operation(summary = "员工分页查询")
@@ -101,9 +101,25 @@ public class EmployeeController {
     @PostMapping("/status/{status}")
     public Result<String> setStatus(Long id, @PathVariable Integer status) {
         log.info("启用/禁用员工账号：id: {}, status: {}", id, status);
-        return employeeService.setStatus(id, status) ?
-                Result.success(MessageConstant.ACCOUNT_SET_STATUS_SUCCESS) :
-                Result.error(MessageConstant.ACCOUNT_SET_STATUS_ERROR);
+        employeeService.setStatus(id, status);
+        return Result.success(MessageConstant.ACCOUNT_SET_STATUS_SUCCESS);
+    }
+
+    @Operation(summary = "根据 id 查询员工")
+    @GetMapping("/{id}")
+    public Result<Employee> getById(@PathVariable Long id) {
+        log.info("根据 id 查询员工：{}", id);
+        Employee employee = employeeService.getById(id);
+        return Result.success(employee);
+    }
+
+
+    @Operation(summary = "更新员工信息")
+    @PutMapping
+    public Result<String> update(@RequestBody EmployeeDTO employeeDTO) {
+        log.info("更新员工信息：{}", employeeDTO);
+        employeeService.update(employeeDTO);
+        return Result.success(MessageConstant.EMPLOYEE_UPDATE_SUCCESS);
     }
 }
 

@@ -13,13 +13,15 @@ public class MessageConstant {
     public static final String EMPLOYEE_INSERT_SUCCESS = "新增员工成功！";
     public static final String ACCOUNT_SET_STATUS_SUCCESS = "账号状态设置成功！";
     public static final String ACCOUNT_SET_STATUS_ERROR = "账号状态设置失败！";
+    public static final String EMPLOYEE_NOT_FOUND = "该员工不存在！";
+    public static final String EMPLOYEE_UPDATE_ERROR = "员工信息更新失败！";
+    public static final String EMPLOYEE_UPDATE_SUCCESS = "员工信息更新成功！";
 
     public static final String USERNAME_ERROR= "账号输入不符，请输入3-20个字符！";
     public static final String USERNAME_EMPTY= "未输入用户名！";
     public static final String USERNAME_REPEAT= "用户名重复！";
     public static final String PHONE_NUMBER_ERROR= "请输入正确的手机号！";
     public static final String ID_NUMBER_ERROR= "身份证号码不正确！";
-    public static final String SET_STATUS_ERROR= "设置账号状态失败！";
 
 
 
