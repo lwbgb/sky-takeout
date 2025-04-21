@@ -11,4 +11,6 @@ public interface EmployeeService {
     boolean insert(Employee employee);
 
     EmployeePageVO page(String name, Integer pageNum, Integer pageSize);
+
+    boolean setStatus(Long id, Integer status);
 }

@@ -44,6 +44,6 @@ public class WebMvcConstruction extends WebMvcConfigurationSupport {
         // 设置日期类型到 json 的格式映射
         converter.setObjectMapper(new JacksonObjectMapper());
         // 将自定义的消息转换器添加到框架的转换器中，并设置优先级最高
-        converters.add(0, converter);
+        converters.add(6, converter);
     }
 }

@@ -2,19 +2,21 @@ package pers.lwb.controller.admin;
 
 import io.jsonwebtoken.Claims;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.BeanUtils;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import pers.lwb.constant.JwtClaimsConstant;
+import pers.lwb.constant.MessageConstant;
 import pers.lwb.dto.EmployeeDTO;
 import pers.lwb.dto.EmployeeLoginDTO;
 import pers.lwb.dto.EmployeePageDTO;
 import pers.lwb.entity.Employee;
-import pers.lwb.exception.BaseException;
 import pers.lwb.properties.JwtProperties;
 import pers.lwb.result.Result;
 import pers.lwb.service.EmployeeService;
@@ -67,7 +69,6 @@ public class EmployeeController {
 
     @Operation(summary = "新增员工")
     @PostMapping
-    @Transactional(rollbackFor = BaseException.class) // 设置出现新增员工异常则回滚
     public Result<Object> insert(@RequestBody EmployeeDTO employeeDTO, HttpServletRequest request) {
         log.info("新增员工：{}", employeeDTO);
 
@@ -81,7 +82,7 @@ public class EmployeeController {
         employee.setUpdateUser(empId);
 
         boolean res = employeeService.insert(employee);
-        return res ? Result.success("新增员工成功！") : Result.error("新增员工失败！");
+        return res ? Result.success(MessageConstant.EMPLOYEE_INSERT_SUCCESS) : Result.error(MessageConstant.EMPLOYEE_INSERT_ERROR);
     }
 
     @Operation(summary = "员工分页查询")
@@ -90,6 +91,19 @@ public class EmployeeController {
         log.info("员工分页查询：{}", employeePageDTO);
         EmployeePageVO pageVO = employeeService.page(employeePageDTO.getName(), employeePageDTO.getPage(), employeePageDTO.getPageSize());
         return Result.success(pageVO);
+    }
+
+    @Operation(summary = "设置账号状态")
+    @Parameters({
+            @Parameter(name = "id", in = ParameterIn.DEFAULT),
+            @Parameter(name = "status", in = ParameterIn.PATH)
+    })
+    @PostMapping("/status/{status}")
+    public Result<String> setStatus(Long id, @PathVariable Integer status) {
+        log.info("启用/禁用员工账号：id: {}, status: {}", id, status);
+        return employeeService.setStatus(id, status) ?
+                Result.success(MessageConstant.ACCOUNT_SET_STATUS_SUCCESS) :
+                Result.error(MessageConstant.ACCOUNT_SET_STATUS_ERROR);
     }
 }
 

@@ -4,15 +4,14 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import pers.lwb.constant.MessageConstant;
 import pers.lwb.constant.PasswordConstant;
 import pers.lwb.constant.StatusConstant;
 import pers.lwb.dto.EmployeeLoginDTO;
 import pers.lwb.entity.Employee;
-import pers.lwb.exception.AccountNotFoundException;
-import pers.lwb.exception.EmployeeInsertException;
-import pers.lwb.exception.PasswordErrorException;
+import pers.lwb.exception.*;
 import pers.lwb.mapper.EmployeeMapper;
 import pers.lwb.service.EmployeeService;
 import pers.lwb.vo.EmployeePageVO;
@@ -61,6 +60,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return           插入个数(0/1)
      */
     @Override
+    @Transactional(rollbackFor = BaseException.class) // 设置出现新增员工异常则回滚
     public boolean insert(Employee employee) {
         // 补充员工属性
         String defaultPwd = DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes());
@@ -92,6 +92,24 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<Employee> list = mapper.list(name);
         Page<Employee> page = (Page<Employee>) list;
         return new EmployeePageVO(page.getTotal(), page.getResult());
+    }
+
+    /**
+     * 启用/禁用账号
+     * @param status    账号状态
+     * @return          success/error
+     */
+    @Override
+    @Transactional(rollbackFor = BaseException.class)
+    public boolean setStatus(Long id, Integer status) {
+        Employee employee = Employee.builder()
+                .id(id)
+                .status(status)
+                .build();
+        int n = mapper.update(employee);
+        if (n < 0)
+            throw new SetStatusErrorException(MessageConstant.SET_STATUS_ERROR);
+        return true;
     }
 }
 

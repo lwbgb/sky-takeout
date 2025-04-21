@@ -49,6 +49,4 @@ public class GlobalExceptionHandler {
         log.info(ex.getMessage());
         return Result.error("JWT 令牌不匹配");
     }
-
-
 }
