@@ -17,7 +17,7 @@ import pers.lwb.entity.Employee;
 import pers.lwb.exception.*;
 import pers.lwb.mapper.EmployeeMapper;
 import pers.lwb.service.EmployeeService;
-import pers.lwb.vo.EmployeePageVO;
+import pers.lwb.vo.PageVO;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -83,7 +83,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         int n = mapper.insert(employee);
         if (n <= 0)
-            throw new EmployeeInsertException(MessageConstant.EMPLOYEE_INSERT_ERROR);
+            throw new InsertException(MessageConstant.EMPLOYEE_INSERT_ERROR);
     }
 
     /**
@@ -95,11 +95,11 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return 查询结果
      */
     @Override
-    public EmployeePageVO page(String name, Integer pageNum, Integer pageSize) {
+    public PageVO<Employee> page(String name, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<Employee> list = mapper.list(name);
         Page<Employee> page = (Page<Employee>) list;
-        return new EmployeePageVO(page.getTotal(), page.getResult());
+        return new PageVO<>(page.getTotal(), page.getResult());
     }
 
     /**
@@ -152,7 +152,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         int n = mapper.update(employee);
         if (n <= 0)
-            throw new EmployeeUpdateException(MessageConstant.EMPLOYEE_UPDATE_ERROR);
+            throw new UpdateException(MessageConstant.EMPLOYEE_UPDATE_ERROR);
     }
 }
 

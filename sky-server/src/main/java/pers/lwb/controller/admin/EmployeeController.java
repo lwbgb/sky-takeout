@@ -22,7 +22,7 @@ import pers.lwb.result.Result;
 import pers.lwb.service.EmployeeService;
 import pers.lwb.utils.JwtUtils;
 import pers.lwb.vo.EmployeeLoginVO;
-import pers.lwb.vo.EmployeePageVO;
+import pers.lwb.vo.PageVO;
 
 import java.util.HashMap;
 
@@ -87,9 +87,9 @@ public class EmployeeController {
 
     @Operation(summary = "员工分页查询")
     @GetMapping("/page")
-    public Result<EmployeePageVO> page(@ParameterObject EmployeePageDTO employeePageDTO) {
+    public Result<PageVO<Employee>> page(@ParameterObject EmployeePageDTO employeePageDTO) {
         log.info("员工分页查询：{}", employeePageDTO);
-        EmployeePageVO pageVO = employeeService.page(employeePageDTO.getName(), employeePageDTO.getPage(), employeePageDTO.getPageSize());
+        PageVO<Employee> pageVO = employeeService.page(employeePageDTO.getName(), employeePageDTO.getPage(), employeePageDTO.getPageSize());
         return Result.success(pageVO);
     }
 

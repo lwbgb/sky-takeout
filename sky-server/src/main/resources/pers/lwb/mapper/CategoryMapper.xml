@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="pers.lwb.mapper.CategoryMapper">
+
+    <sql id="selectAll">
+        select id,
+               type,
+               name,
+               sort,
+               status,
+               create_time,
+               update_time,
+               create_user,
+               update_user
+        from category
+    </sql>
+
+    <insert id="insert">
+        insert into category(type, name, sort, status, create_time, update_time, create_user, update_user)
+        values (#{type}, #{name}, #{sort}, #{status}, #{createTime}, #{updateTime}, #{createUser}, #{updateUser})
+    </insert>
+
+    <delete id="deleteById">
+        delete
+        from category
+        where id = #{id}
+    </delete>
+
+    <select id="page" resultType="pers.lwb.entity.Category">
+        <include refid="selectAll"/>
+        <where>
+            <if test="name != null and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="type != null">and type = #{type}</if>
+        </where>
+        order by sort asc, create_time desc
+    </select>
+
+    <update id="update" parameterType="pers.lwb.entity.Category">
+        update category
+        <set>
+            <if test="type != null">type = #{type},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateUser != null">update_user = #{updateUser}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="list" resultType="pers.lwb.entity.Category">
+        <include refid="selectAll"/>
+        where status = 1
+        <if test="type != null">and type = #{type}</if>
+        order by sort asc, create_time desc
+    </select>
+</mapper>
