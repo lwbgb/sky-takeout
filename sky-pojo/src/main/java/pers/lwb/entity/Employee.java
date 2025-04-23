@@ -28,7 +28,7 @@ public class Employee implements Serializable {
     @Schema(defaultValue = "15961592121")
     private String phone;
 
-    @Schema(defaultValue = "男")
+    @Schema(defaultValue = "1")
     private String sex;
 
     @Schema(defaultValue = "320205202004052394")
@@ -45,4 +45,16 @@ public class Employee implements Serializable {
     private Long createUser;
 
     private Long updateUser;
+
+    public void fillInfo(LocalDateTime createTime, LocalDateTime updateTime, Long createUser, Long updateUser) {
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+        this.createUser = createUser;
+        this.updateUser = updateUser;
+    }
+
+    public void fillInfo(LocalDateTime updateTime, Long updateUser) {
+        this.updateTime = updateTime;
+        this.updateUser = updateUser;
+    }
 }

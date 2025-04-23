@@ -43,30 +43,30 @@ public class CategoryController {
         return Result.success(pageResult);
     }
 
-    @DeleteMapping
     @Operation(summary = "删除分类")
+    @DeleteMapping
     public Result<String> deleteById(Long id) {
         log.info("删除分类：{}", id);
         categoryService.deleteById(id);
         return Result.success(MessageConstant.CATEGORY_DELETE_SUCCESS);
     }
 
-    @PutMapping
     @Operation(summary = "编辑分类")
+    @PutMapping
     public Result<String> update(@RequestBody CategoryDTO categoryDTO) {
         categoryService.update(categoryDTO);
         return Result.success(MessageConstant.CATEGORY_UPDATE_SUCCESS);
     }
 
-    @PostMapping("/status/{status}")
     @Operation(summary = "启用/禁用分类")
+    @PostMapping("/status/{status}")
     public Result<String> setStatus(Long id, @PathVariable("status") Integer status) {
         categoryService.setStatus(id, status);
         return Result.success(MessageConstant.CATEGORY_SET_STATUS_SUCCESS);
     }
 
-    @GetMapping("/list")
     @Operation(summary = "根据类型查询分类")
+    @GetMapping("/list")
     public Result<List<Category>> list(Integer type) {
         List<Category> categories = categoryService.list(type);
         return Result.success(categories);

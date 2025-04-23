@@ -9,7 +9,7 @@ public interface EmployeeService {
 
     Employee login(EmployeeLoginDTO employeeLoginDTO);
 
-    void insert(Employee employee);
+    void insert(EmployeeDTO EmployeeDTO);
 
     PageVO<Employee> page(String name, Integer pageNum, Integer pageSize);
 

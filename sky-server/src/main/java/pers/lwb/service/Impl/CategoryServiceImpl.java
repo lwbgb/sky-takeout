@@ -5,9 +5,9 @@ import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pers.lwb.constant.MessageConstant;
 import pers.lwb.constant.StatusConstant;
-import pers.lwb.context.LocalContext;
 import pers.lwb.dto.CategoryDTO;
 import pers.lwb.dto.CategoryPageDTO;
 import pers.lwb.entity.Category;
@@ -18,7 +18,6 @@ import pers.lwb.mapper.SetmealMapper;
 import pers.lwb.service.CategoryService;
 import pers.lwb.vo.PageVO;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -42,6 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
      *
      * @param categoryDTO 分类信息
      */
+    @Override
     public void insert(CategoryDTO categoryDTO) {
         Category category = new Category();
         BeanUtils.copyProperties(categoryDTO, category);
@@ -50,10 +50,10 @@ public class CategoryServiceImpl implements CategoryService {
         category.setStatus(StatusConstant.DISABLE);
 
         // 补充信息
-        category.setCreateTime(LocalDateTime.now());
-        category.setUpdateTime(LocalDateTime.now());
-        category.setCreateUser(LocalContext.getCurrentId());
-        category.setUpdateUser(LocalContext.getCurrentId());
+//        category.setCreateTime(LocalDateTime.now());
+//        category.setUpdateTime(LocalDateTime.now());
+//        category.setCreateUser(LocalContext.getCurrentId());
+//        category.setUpdateUser(LocalContext.getCurrentId());
 
         int n = categoryMapper.insert(category);
         if (n <= 0)
@@ -66,6 +66,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @param categoryPageDTO 分页信息
      * @return 分页结果
      */
+    @Override
     public PageVO<Category> page(CategoryPageDTO categoryPageDTO) {
         PageHelper.startPage(categoryPageDTO.getPage(), categoryPageDTO.getPageSize());
 
@@ -81,6 +82,8 @@ public class CategoryServiceImpl implements CategoryService {
      *
      * @param id 分类 id
      */
+    @Override
+    @Transactional(rollbackFor = BaseException.class)
     public void deleteById(Long id) {
         // Category 作为菜品和套餐的关联表，删除分类前先要检索是否有关联数据，如果有则拒绝删除
         Integer dishNum = dishMapper.countByCategoryId(id);
@@ -102,13 +105,15 @@ public class CategoryServiceImpl implements CategoryService {
      *
      * @param categoryDTO 分类信息
      */
+    @Override
+    @Transactional(rollbackFor = BaseException.class)
     public void update(CategoryDTO categoryDTO) {
         Category category = new Category();
         BeanUtils.copyProperties(categoryDTO, category);
 
         // 更新修改信息
-        category.setUpdateTime(LocalDateTime.now());
-        category.setUpdateUser(LocalContext.getCurrentId());
+//        category.setUpdateTime(LocalDateTime.now());
+//        category.setUpdateUser(LocalContext.getCurrentId());
 
         int n = categoryMapper.update(category);
         if (n <= 0)
@@ -121,12 +126,14 @@ public class CategoryServiceImpl implements CategoryService {
      * @param id 分类 id
      * @param status 分类状态
      */
+    @Override
+    @Transactional(rollbackFor = BaseException.class)
     public void setStatus(Long id, Integer status) {
         Category category = Category.builder()
                 .id(id)
                 .status(status)
-                .updateTime(LocalDateTime.now())
-                .updateUser(LocalContext.getCurrentId())
+//                .updateTime(LocalDateTime.now())
+//                .updateUser(LocalContext.getCurrentId())
                 .build();
 
         int n = categoryMapper.update(category);
@@ -140,6 +147,7 @@ public class CategoryServiceImpl implements CategoryService {
      * @param type 分类类型
      * @return 查询结果
      */
+    @Override
     public List<Category> list(Integer type) {
         return categoryMapper.list(type);
     }

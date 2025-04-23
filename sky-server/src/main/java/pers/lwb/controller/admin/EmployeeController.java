@@ -1,6 +1,5 @@
 package pers.lwb.controller.admin;
 
-import io.jsonwebtoken.Claims;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -9,7 +8,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
-import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 import pers.lwb.constant.JwtClaimsConstant;
 import pers.lwb.constant.MessageConstant;
@@ -72,16 +70,15 @@ public class EmployeeController {
     public Result<Object> insert(@RequestBody EmployeeDTO employeeDTO, HttpServletRequest request) {
         log.info("新增员工：{}", employeeDTO);
 
-        // TODO 从 JWE 中获取管理员 id
-        String jwe = request.getHeader("token");
-        Claims claims = JwtUtils.parseJwe(jwe, properties.getAdminSecretKey());
-        Long empId = Long.valueOf(claims.get(JwtClaimsConstant.EMP_ID).toString());
-        Employee employee = new Employee();
-        BeanUtils.copyProperties(employeeDTO, employee);
-        employee.setCreateUser(empId);
-        employee.setUpdateUser(empId);
+        // 从 JWE 中获取管理员 id
+//        String jwe = request.getHeader("token");
+//        Claims claims = JwtUtils.parseJwe(jwe, properties.getAdminSecretKey());
+//        Long empId = Long.valueOf(claims.get(JwtClaimsConstant.EMP_ID).toString());
 
-        employeeService.insert(employee);
+//        employee.setCreateUser(empId);
+//        employee.setUpdateUser(empId);
+
+        employeeService.insert(employeeDTO);
         return Result.success(MessageConstant.EMPLOYEE_INSERT_SUCCESS);
     }
 

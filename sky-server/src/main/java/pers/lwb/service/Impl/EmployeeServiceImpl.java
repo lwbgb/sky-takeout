@@ -10,7 +10,6 @@ import org.springframework.util.DigestUtils;
 import pers.lwb.constant.MessageConstant;
 import pers.lwb.constant.PasswordConstant;
 import pers.lwb.constant.StatusConstant;
-import pers.lwb.context.LocalContext;
 import pers.lwb.dto.EmployeeDTO;
 import pers.lwb.dto.EmployeeLoginDTO;
 import pers.lwb.entity.Employee;
@@ -19,7 +18,6 @@ import pers.lwb.mapper.EmployeeMapper;
 import pers.lwb.service.EmployeeService;
 import pers.lwb.vo.PageVO;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -65,21 +63,25 @@ public class EmployeeServiceImpl implements EmployeeService {
     /**
      * 新增员工
      *
-     * @param employee 员工对象
+     * @param employeeDTO 员工对象
      */
     @Override
     @Transactional(rollbackFor = BaseException.class) // 设置出现新增员工异常则回滚
-    public void insert(Employee employee) {
+    public void insert(EmployeeDTO employeeDTO) {
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeDTO, employee);
+
         // 补充员工属性
         String defaultPwd = DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes());
         employee.setPassword(defaultPwd);
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
         employee.setStatus(StatusConstant.ENABLE);
 
         // 从 ThreadLocal 中取出 empId
 //        Long empId = LocalContext.getCurrentId();
-//        log.info("empId：{}", empId);
+//        employee.setCreateUser(empId);
+//        employee.setUpdateUser(empId);
+//        employee.setCreateTime(LocalDateTime.now());
+//        employee.setUpdateTime(LocalDateTime.now());
 
         int n = mapper.insert(employee);
         if (n <= 0)
@@ -146,9 +148,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void update(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDTO, employee);
-        // 设置更新时间和操作人
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(LocalContext.getCurrentId());
 
         int n = mapper.update(employee);
         if (n <= 0)
