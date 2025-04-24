@@ -1,4 +1,4 @@
-package pers.lwb.entity;
+package pers.lwb.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -8,11 +8,9 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
-@Schema(title = "菜品类")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Dish {
-
+public class DishVO {
     private Long id;
 
     private String image;
@@ -28,11 +26,7 @@ public class Dish {
 
     private String description;
 
-    private LocalDateTime createTime;
-
     private LocalDateTime updateTime;
 
-    private Long createUser;
-
-    private Long updateUser;
+    private String categoryName;
 }

@@ -31,4 +31,16 @@
         from dish
         where category_id = #{categoryId}
     </select>
+
+    <select id="list" resultType="pers.lwb.vo.DishVO">
+        select dish.id, dish.name, category_id, price, image, description, dish.status, dish.update_time, category.name categoryName
+        from dish, category
+        <where>
+            category_id = category.id
+            <if test="name != null and name != ''">and dish.name like concat('%', #{name}, '%')</if>
+            <if test="status != null">and dish.status = #{status}</if>
+            <if test="categoryId != null">and category_id = #{categoryId}</if>
+        </where>
+        order by dish.create_time desc
+    </select>
 </mapper>

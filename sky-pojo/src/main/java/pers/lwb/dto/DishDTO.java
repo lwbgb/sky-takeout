@@ -25,7 +25,7 @@ public class DishDTO {
     private double price;
 
     @Schema(defaultValue = "19", description = "1-菜品分类 2-套餐分类")
-    private Integer categoryId;
+    private Long categoryId;
 
     @Schema(hidden = true, description = "菜品描述")
     private String description;

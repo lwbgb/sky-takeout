@@ -1,10 +1,13 @@
 package pers.lwb.service.Impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pers.lwb.constant.MessageConstant;
 import pers.lwb.dto.DishDTO;
+import pers.lwb.dto.DishPageDTO;
 import pers.lwb.entity.Dish;
 import pers.lwb.entity.DishFlavor;
 import pers.lwb.exception.BaseException;
@@ -12,6 +15,8 @@ import pers.lwb.exception.InsertException;
 import pers.lwb.mapper.DishFlavorMapper;
 import pers.lwb.mapper.DishMapper;
 import pers.lwb.service.DishService;
+import pers.lwb.vo.DishVO;
+import pers.lwb.vo.PageVO;
 
 import java.util.List;
 
@@ -49,4 +54,20 @@ public class DishServiceImpl implements DishService {
         if (n <= 0)
             throw new InsertException(MessageConstant.FLAVOR_INSERT_ERROR);
     }
+
+    @Override
+    public PageVO<DishVO> page(DishPageDTO dishPageDTO) {
+        PageHelper.startPage(dishPageDTO.getPage(), dishPageDTO.getPageSize());
+        List<DishVO> dishes = dishMapper.list(dishPageDTO);
+        Page<DishVO> page = (Page<DishVO>) dishes;
+        return new PageVO<>(page.getTotal(), page.getResult());
+    }
 }
+
+
+
+
+
+
+
+
