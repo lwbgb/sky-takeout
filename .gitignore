@@ -39,7 +39,7 @@ build/
 
 **/target/
 .idea
-*.iml
 *.class
 *Test.java
 **/test/
+**/resources/application-dev.yml
