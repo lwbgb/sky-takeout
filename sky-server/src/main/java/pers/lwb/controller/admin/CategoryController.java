@@ -15,7 +15,7 @@ import pers.lwb.vo.PageVO;
 
 import java.util.List;
 
-@Tag(name = "CategoryController")
+@Tag(name = "Admin CategoryController")
 @Slf4j
 @RestController
 @RequestMapping("/admin/category")

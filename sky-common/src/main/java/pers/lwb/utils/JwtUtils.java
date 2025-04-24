@@ -3,20 +3,16 @@ package pers.lwb.utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.*;
-import pers.lwb.properties.JwtProperties;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.Map;
-
 
 public class JwtUtils {
 
     // 设置算法，生成秘钥
     private static final MacAlgorithm algorithm = Jwts.SIG.HS512;
     private static final SecretKey key = algorithm.key().build();
-
-    private JwtProperties properties;
 
     /**
      * JWS 令牌生成
@@ -74,7 +70,7 @@ public class JwtUtils {
         Date expiration = new Date(currentTimeMillis + seconds * 1000);
 
         String jwe = Jwts.builder()
-                .claims(claims)
+//                .claims(claims)
                 .encryptWith(password, alg, enc)
                 .expiration(expiration)
                 .compact();

@@ -1,5 +1,7 @@
 package pers.lwb.handler;
 
+import com.aliyun.oss.ClientException;
+import com.aliyun.oss.OSSException;
 import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,6 +16,12 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+
+    /**
+     * 自定义异常捕获
+     * @param e 自定义异常
+     * @return 异常信息
+     */
     @ExceptionHandler
     public Result<String> catchExp(BaseException e) {
         log.info("GlobalExceptionHandler caught exception：{}", e.getMessage());
@@ -49,4 +57,24 @@ public class GlobalExceptionHandler {
         log.info(ex.getMessage());
         return Result.error("JWT 令牌不匹配");
     }
+
+    /**
+     * 阿里云 OSS 上传文件异常
+     * @param ex 捕获的异常
+     * @return 异常信息
+     */
+    @ExceptionHandler(exception = {ClientException.class, OSSException.class})
+    public Result<String> catchExp(Exception ex) {
+        log.info("阿里云 OSS 上传文件异常：{}", ex.getMessage());
+        return Result.error(ex.getMessage());
+    }
 }
+
+
+
+
+
+
+
+
+

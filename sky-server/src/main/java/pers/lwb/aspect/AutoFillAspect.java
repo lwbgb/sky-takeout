@@ -9,8 +9,10 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 import pers.lwb.annotation.AutoFill;
 import pers.lwb.constant.AutoFillConstant;
+import pers.lwb.constant.MessageConstant;
 import pers.lwb.context.LocalContext;
 import pers.lwb.enumeration.OperationType;
+import pers.lwb.exception.AutoFillErrorException;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -49,7 +51,7 @@ public class AutoFillAspect {
                             field.set(entity, LocalContext.getCurrentId());
                         }
                     } catch (IllegalAccessException e) {
-                        throw new RuntimeException(e.getMessage());
+                        throw new AutoFillErrorException(MessageConstant.AUTO_FILL_ERROR);
                     }
                 });
             } else if (OperationType.UPDATE.equals(annotation.value())) {
@@ -64,7 +66,7 @@ public class AutoFillAspect {
                             field.set(entity, LocalContext.getCurrentId());
                         }
                     } catch (IllegalAccessException e) {
-                        throw new RuntimeException(e.getMessage());
+                        throw new AutoFillErrorException(MessageConstant.AUTO_FILL_ERROR);
                     }
                 });
             }

@@ -16,6 +16,10 @@ spring:
     url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
     username: ${sky.datasource.username}
     password: ${sky.datasource.password}
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 100MB
 
 mybatis:
   #mapper配置文件
@@ -37,12 +41,16 @@ logging:
 
 sky:
   jwt:
-    # 设置jwt签名加密时使用的秘钥
-    admin-secret-key: sayuri
-    # 设置jwt过期时间
-    admin-ttl: 720000
-    # 设置前端传递过来的令牌名称
-    admin-token-name: token
+    admin-secret-key: ${sky.jwt.admin-secret-key}
+    admin-token-name: ${sky.jwt.admin-token-name}
+    admin-ttl: ${sky.jwt.admin-ttl}
 
-
-
+aliyun:
+  oss:
+    endpoint: ${aliyun.oss.endpoint}
+    bucket-name: ${aliyun.oss.bucket-name}
+    region: ${aliyun.oss.region}
+    credential:
+      access-key-id: ${aliyun.oss.credential.access-key-id}
+      access-key-secrect: ${aliyun.oss.credential.access-key-secrect}
+      ttl: ${aliyun.oss.credential.ttl}
