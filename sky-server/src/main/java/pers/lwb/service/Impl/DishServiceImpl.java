@@ -2,6 +2,7 @@ package pers.lwb.service.Impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,15 +12,19 @@ import pers.lwb.dto.DishPageDTO;
 import pers.lwb.entity.Dish;
 import pers.lwb.entity.DishFlavor;
 import pers.lwb.exception.BaseException;
+import pers.lwb.exception.DeleteException;
+import pers.lwb.exception.DeleteNotAllowedException;
 import pers.lwb.exception.InsertException;
 import pers.lwb.mapper.DishFlavorMapper;
 import pers.lwb.mapper.DishMapper;
+import pers.lwb.mapper.SetmealDishMapper;
 import pers.lwb.service.DishService;
 import pers.lwb.vo.DishVO;
 import pers.lwb.vo.PageVO;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class DishServiceImpl implements DishService {
 
@@ -27,9 +32,12 @@ public class DishServiceImpl implements DishService {
 
     private final DishFlavorMapper dishFlavorMapper;
 
-    public DishServiceImpl(DishMapper dishMapper, DishFlavorMapper dishFlavorMapper) {
+    private final SetmealDishMapper setmealDishMapper;
+
+    public DishServiceImpl(DishMapper dishMapper, DishFlavorMapper dishFlavorMapper, SetmealDishMapper setmealDishMapper) {
         this.dishMapper = dishMapper;
         this.dishFlavorMapper = dishFlavorMapper;
+        this.setmealDishMapper = setmealDishMapper;
     }
 
     @Override
@@ -61,6 +69,31 @@ public class DishServiceImpl implements DishService {
         List<DishVO> dishes = dishMapper.list(dishPageDTO);
         Page<DishVO> page = (Page<DishVO>) dishes;
         return new PageVO<>(page.getTotal(), page.getResult());
+    }
+
+    @Override
+    @Transactional(rollbackFor = BaseException.class)
+    public void delete(List<Long> ids) {
+        // 1. 启售中的菜品不能删除
+        ids.forEach(id -> {
+            Dish dish = dishMapper.getById(id);
+            if (dish.getStatus() == 1)
+                throw new DeleteNotAllowedException(MessageConstant.DISH_ON_SALE);
+        });
+
+        // 2. 与套餐关联的菜品不能删除
+        Long count = setmealDishMapper.countByDishIds(ids);
+        if (count > 0)
+            throw new DeleteNotAllowedException(MessageConstant.DISH_BE_RELATED_BY_SETMEAL);
+
+        // 3. 删除菜品关联的口味
+        dishFlavorMapper.delete(ids);
+        log.info(MessageConstant.FLAVOR_DELETE_SUCCESS);
+
+        // 4. 删除菜品
+        int n = dishMapper.delete(ids);
+        if (n <= 0)
+            throw new DeleteException(MessageConstant.DISH_DELETE_ERROR);
     }
 }
 

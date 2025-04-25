@@ -2,7 +2,6 @@ package pers.lwb.service.Impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -87,8 +86,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(rollbackFor = BaseException.class)
     public void deleteById(Long id) {
         // Category 作为菜品和套餐的关联表，删除分类前先要检索是否有关联数据，如果有则拒绝删除
-        Integer dishNum = dishMapper.countByCategoryId(id);
-        Integer setMealNum = setmealMapper.countByCategoryId(id);
+        Long dishNum = dishMapper.countByCategoryId(id);
+        Long setMealNum = setmealMapper.countByCategoryId(id);
 
         if (dishNum > 0)
             throw new DeleteNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_DISH);
@@ -124,7 +123,7 @@ public class CategoryServiceImpl implements CategoryService {
     /**
      * 启用/禁用分类
      *
-     * @param id 分类 id
+     * @param id     分类 id
      * @param status 分类状态
      */
     @Override

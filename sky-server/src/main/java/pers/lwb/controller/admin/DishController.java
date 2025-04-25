@@ -14,6 +14,8 @@ import pers.lwb.service.DishService;
 import pers.lwb.vo.DishVO;
 import pers.lwb.vo.PageVO;
 
+import java.util.List;
+
 @Slf4j
 @Tag(name = "Admin DishController")
 @RestController
@@ -37,7 +39,17 @@ public class DishController {
     @Operation(summary = "分页查询")
     @GetMapping("/page")
     public Result<PageVO<DishVO>> page(@ParameterObject DishPageDTO dishPageDTO) {
+        log.info("分页查询：{}", dishPageDTO);
         PageVO<DishVO> pageVO = dishService.page(dishPageDTO);
         return Result.success(pageVO);
+    }
+
+
+    @Operation(summary = "批量删除菜品")
+    @DeleteMapping
+    public Result<String> delete(@RequestParam List<Long> ids) {
+        log.info("批量删除菜品：{}", ids);
+        dishService.delete(ids);
+        return Result.success(MessageConstant.DISH_DELETE_SUCCESS);
     }
 }

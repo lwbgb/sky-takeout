@@ -15,7 +15,11 @@ public interface DishMapper {
     @AutoFill(OperationType.INSERT)
     int insert(Dish dish);
 
-    Integer countByCategoryId(Long categoryId);
+    Long countByCategoryId(Long categoryId);
 
     List<DishVO> list(DishPageDTO dishPageDTO);
+
+    int delete(List<Long> ids);
+
+    Dish getById(Long id);
 }

@@ -36,21 +36,22 @@ public class MessageConstant {
     public static final String CATEGORY_BE_RELATED_BY_DISH = "当前菜品关联了分类,不能删除";
 
     // 菜品相关操作
-    public static final String DISH_INSERT_ERROR = "新增分类失败！";
-    public static final String DISH_INSERT_SUCCESS = "新增分类成功！";
-    public static final String DISH_DELETE_SUCCESS = "删除分类成功！";
-    public static final String DISH_DELETE_ERROR = "删除分类失败！";
+    public static final String DISH_INSERT_ERROR = "新增菜品失败！";
+    public static final String DISH_INSERT_SUCCESS = "新增菜品成功！";
+    public static final String DISH_DELETE_SUCCESS = "删除菜品成功！";
+    public static final String DISH_DELETE_ERROR = "删除菜品失败！";
     public static final String DISH_UPDATE_ERROR = "分类信息更新失败！";
     public static final String DISH_UPDATE_SUCCESS = "分类信息更新成功！";
     public static final String DISH_SET_STATUS_SUCCESS = "分类状态设置成功！";
     public static final String DISH_SET_STATUS_ERROR = "分类状态设置失败！";
-    public static final String DISH_BE_RELATED_BY_SETMEAL = "当前分类关联了套餐,不能删除";
-    public static final String DISH_BE_RELATED_BY_DISH = "当前分类关联了菜品,不能删除";
-    public static final String DISH_ON_SALE = "起售中的菜品不能删除";
+    public static final String DISH_BE_RELATED_BY_SETMEAL = "当前分类关联了套餐,不能删除!";
+    public static final String DISH_ON_SALE = "无法删除启售中的菜品!";
 
     // 口味相关操作
     public static final String FLAVOR_INSERT_ERROR = "新增口味失败！";
     public static final String FLAVOR_INSERT_SUCCESS = "新增口味成功！";
+    public static final String FLAVOR_DELETE_ERROR = "菜品口味删除失败！";
+    public static final String FLAVOR_DELETE_SUCCESS = "菜品口味删除成功！";
 
 
     public static final String UNKNOWN_ERROR = "未知错误！";

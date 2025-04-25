@@ -5,6 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface SetmealMapper {
 
-    Integer countByCategoryId(Long id);
+    Long countByCategoryId(Long id);
 
 }
