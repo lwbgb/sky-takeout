@@ -131,6 +131,13 @@ public class DishServiceImpl implements DishService {
         if (n <= 0)
             throw new UpdateException(MessageConstant.DISH_UPDATE_ERROR);
     }
+
+    @Override
+    public void setStatus(Long id, Integer status) {
+        int n = dishMapper.setStatus(id, status);
+        if (n <= 0)
+            throw new UpdateException(MessageConstant.DISH_SET_STATUS_ERROR);
+    }
 }
 
 
