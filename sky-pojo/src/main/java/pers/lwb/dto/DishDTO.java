@@ -15,6 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 public class DishDTO {
 
+    private Long id;
+
     @Schema(defaultValue = "1.jpg")
     private String image;
 

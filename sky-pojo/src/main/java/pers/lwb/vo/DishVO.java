@@ -4,8 +4,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pers.lwb.entity.DishFlavor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -29,4 +32,7 @@ public class DishVO {
     private LocalDateTime updateTime;
 
     private String categoryName;
+
+    @Schema(hidden = true, description = "菜品口味")
+    private List<DishFlavor> flavors = new ArrayList<>();
 }

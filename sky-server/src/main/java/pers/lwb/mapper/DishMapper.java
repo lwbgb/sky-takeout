@@ -22,4 +22,7 @@ public interface DishMapper {
     int delete(List<Long> ids);
 
     Dish getById(Long id);
+
+    @AutoFill(OperationType.UPDATE)
+    int update(Dish dish);
 }

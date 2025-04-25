@@ -11,10 +11,7 @@ import pers.lwb.dto.DishDTO;
 import pers.lwb.dto.DishPageDTO;
 import pers.lwb.entity.Dish;
 import pers.lwb.entity.DishFlavor;
-import pers.lwb.exception.BaseException;
-import pers.lwb.exception.DeleteException;
-import pers.lwb.exception.DeleteNotAllowedException;
-import pers.lwb.exception.InsertException;
+import pers.lwb.exception.*;
 import pers.lwb.mapper.DishFlavorMapper;
 import pers.lwb.mapper.DishMapper;
 import pers.lwb.mapper.SetmealDishMapper;
@@ -94,6 +91,45 @@ public class DishServiceImpl implements DishService {
         int n = dishMapper.delete(ids);
         if (n <= 0)
             throw new DeleteException(MessageConstant.DISH_DELETE_ERROR);
+    }
+
+    @Override
+    public DishVO getVOById(Long id) {
+        Dish dish = dishMapper.getById(id);
+        if (dish == null)
+            throw new DishNotFoundException(MessageConstant.DISH_NOT_FOUND);
+
+        DishVO dishVO = new DishVO();
+        BeanUtils.copyProperties(dish, dishVO);
+
+        List<DishFlavor> flavors = dishFlavorMapper.getByDishId(id);
+        dishVO.setFlavors(flavors);
+
+        return dishVO;
+    }
+
+
+    @Override
+    @Transactional(rollbackFor = BaseException.class)
+    public void update(DishDTO dishDTO) {
+        Dish dish = new Dish();
+        BeanUtils.copyProperties(dishDTO, dish);
+
+        // 1. 修改口味
+        List<DishFlavor> newFlavors = dishDTO.getFlavors();
+        //  (1)删除所有口味
+        dishFlavorMapper.delete(List.of(dishDTO.getId()));
+        //  (2)插入新的口味列表
+        if (!newFlavors.isEmpty()) {
+            newFlavors.forEach(flavor -> flavor.setDishId(dishDTO.getId()));
+            dishFlavorMapper.insertBatch(newFlavors);
+        }
+        log.info(MessageConstant.FLAVOR_UPDATE_SUCCESS);
+
+        // 2. 修改菜品
+        int n = dishMapper.update(dish);
+        if (n <= 0)
+            throw new UpdateException(MessageConstant.DISH_UPDATE_ERROR);
     }
 }
 
