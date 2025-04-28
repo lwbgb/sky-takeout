@@ -57,6 +57,12 @@ public class MessageConstant {
     public static final String FLAVOR_UPDATE_SUCCESS = "菜品口味修改成功！";
     public static final String FLAVOR_UPDATE_ERROR = "菜品口味修改失败！";
 
+    // 店铺相关操作
+    public static final String SHOP_SET_STATUS_SUCCESS = "成功设置店铺营业状态！";
+    public static final String SHOP_SET_STATUS_ERROR = "设置店铺营业状态出错！";
+    public static final String SHOP_GET_STATUS_ERROR = "获取店铺营业状态出错！";
+
+
 
     public static final String UNKNOWN_ERROR = "未知错误！";
     public static final String SHOPPING_CART_IS_NULL = "购物车数据为空，不能下单";

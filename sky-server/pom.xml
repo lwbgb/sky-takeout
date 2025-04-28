@@ -51,6 +51,12 @@
             <scope>test</scope>
         </dependency>
 
+        <!--Spring Data Redis-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
         <!--数据库依赖-->
         <dependency>
             <groupId>com.mysql</groupId>
@@ -112,6 +118,7 @@
             <artifactId>jaxb-runtime</artifactId>
             <version>2.3.3</version>
         </dependency>
+
 
     </dependencies>
 

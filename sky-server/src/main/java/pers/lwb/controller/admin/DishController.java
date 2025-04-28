@@ -71,7 +71,7 @@ public class DishController {
     @Operation(summary = "启用/禁用菜品")
     @PostMapping("/status/{status}")
     public Result<String> setStatus(Long id, @PathVariable Integer status) {
-        log.info("启用/禁用菜品，id：{}，status：{}" ,id , status);
+        log.info("启用/禁用菜品，id：{}，status：{}", id, status);
         dishService.setStatus(id, status);
         return Result.success(MessageConstant.DISH_SET_STATUS_SUCCESS);
     }
