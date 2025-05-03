@@ -2,11 +2,13 @@ package pers.lwb.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Schema(title = "EmployeeLoginDTO", description = "用户登录时传输给客户端的数据类型")
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmployeeLoginDTO {

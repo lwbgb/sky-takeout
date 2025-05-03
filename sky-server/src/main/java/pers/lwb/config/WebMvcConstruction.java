@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import pers.lwb.interceptor.LoginCheckInterceptor;
+import pers.lwb.interceptor.WeChatLoginCheckInterceptor;
 import pers.lwb.json.JacksonObjectMapper;
 
 import java.util.List;
@@ -18,8 +19,11 @@ public class WebMvcConstruction extends WebMvcConfigurationSupport {
 
     private final LoginCheckInterceptor loginCheckInterceptor;
 
-    public WebMvcConstruction(LoginCheckInterceptor loginCheckInterceptor) {
+    private final WeChatLoginCheckInterceptor weChatLoginCheckInterceptor;
+
+    public WebMvcConstruction(LoginCheckInterceptor loginCheckInterceptor, WeChatLoginCheckInterceptor weChatLoginCheckInterceptor) {
         this.loginCheckInterceptor = loginCheckInterceptor;
+        this.weChatLoginCheckInterceptor = weChatLoginCheckInterceptor;
     }
 
     @Override
@@ -28,6 +32,12 @@ public class WebMvcConstruction extends WebMvcConfigurationSupport {
         registry.addInterceptor(loginCheckInterceptor)
                 .addPathPatterns("/admin/**")
                 .excludePathPatterns("/admin/employee/login");
+
+        registry.addInterceptor(weChatLoginCheckInterceptor)
+                .addPathPatterns("/user/**")
+                .excludePathPatterns(List.of(
+                        "/user/user/login",
+                        "/user/shop/status"));
     }
 
     // 添加静态注册表

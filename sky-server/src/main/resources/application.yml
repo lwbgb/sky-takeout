@@ -57,6 +57,9 @@ sky:
     admin-secret-key: ${sky.jwt.admin-secret-key}
     admin-token-name: ${sky.jwt.admin-token-name}
     admin-ttl: ${sky.jwt.admin-ttl}
+    user-secret-key: ${sky.jwt.user-secret-key}
+    user-ttl: ${sky.jwt.user-ttl}
+    user-token-name: ${sky.jwt.user-token-name}
 
 # 阿里云 OSS
 aliyun:
@@ -68,3 +71,7 @@ aliyun:
       access-key-id: ${aliyun.oss.credential.access-key-id}
       access-key-secrect: ${aliyun.oss.credential.access-key-secrect}
       ttl: ${aliyun.oss.credential.ttl}
+
+wechat:
+  appid: ${wechat.appid}
+  secret: ${wechat.secret}

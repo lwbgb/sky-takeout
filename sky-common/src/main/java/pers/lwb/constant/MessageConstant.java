@@ -7,6 +7,7 @@ public class MessageConstant {
     public static final String ACCOUNT_LOCKED = "账号被锁定！";
     public static final String LOGIN_FAILED = "登录失败！";
     public static final String USER_NOT_LOGIN = "用户未登录！";
+    public static final String USER_REGISTER_ERROR= "用户注册失败！";
 
     // 员工相关操作
     public static final String EMPLOYEE_INSERT_ERROR = "新增员工失败！";
