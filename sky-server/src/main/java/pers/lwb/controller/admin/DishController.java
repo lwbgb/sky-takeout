@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import pers.lwb.constant.MessageConstant;
 import pers.lwb.dto.DishDTO;
 import pers.lwb.dto.DishPageDTO;
+import pers.lwb.entity.Dish;
 import pers.lwb.result.Result;
 import pers.lwb.service.DishService;
 import pers.lwb.vo.DishVO;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @Slf4j
 @Tag(name = "Admin DishController")
-@RestController
+@RestController("adminDishController")
 @RequestMapping("/admin/dish")
 public class DishController {
 
@@ -74,5 +75,13 @@ public class DishController {
         log.info("启用/禁用菜品，id：{}，status：{}", id, status);
         dishService.setStatus(id, status);
         return Result.success(MessageConstant.DISH_SET_STATUS_SUCCESS);
+    }
+
+    @Operation(summary = "根据分类 id 查询菜品")
+    @GetMapping("/list")
+    public Result<List<Dish>> list(Long categoryId) {
+        log.info("根据分类 id 查询菜品：{}", categoryId);
+        List<Dish> dishes = dishService.getByCategoryId(categoryId);
+        return Result.success(dishes);
     }
 }

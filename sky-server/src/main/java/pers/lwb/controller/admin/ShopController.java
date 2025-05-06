@@ -12,7 +12,7 @@ import pers.lwb.result.Result;
 
 import java.util.Objects;
 
-@Tag(name = "adminShopController")
+@Tag(name = "Admin ShopController")
 @Slf4j
 @RestController("adminShopController")
 @RequestMapping("/admin/shop")

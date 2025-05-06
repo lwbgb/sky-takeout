@@ -43,12 +43,6 @@
         where id = #{id}
     </update>
 
-    <update id="setStatus">
-        update dish
-        set status = #{status}
-        where id = #{id}
-    </update>
-
     <delete id="delete">
         delete
         from dish
@@ -81,4 +75,10 @@
         <include refid="selectAll"/>
         where id = #{id}
     </select>
+
+    <select id="getByCategoryId" resultType="pers.lwb.entity.Dish">
+        <include refid="selectAll"/>
+        where category_id = #{categoryId}
+    </select>
+
 </mapper>

@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pers.lwb.constant.MessageConstant;
+import pers.lwb.constant.StatusConstant;
 import pers.lwb.dto.DishDTO;
 import pers.lwb.dto.DishPageDTO;
 import pers.lwb.entity.Dish;
@@ -15,6 +16,7 @@ import pers.lwb.exception.*;
 import pers.lwb.mapper.DishFlavorMapper;
 import pers.lwb.mapper.DishMapper;
 import pers.lwb.mapper.SetmealDishMapper;
+import pers.lwb.mapper.SetmealMapper;
 import pers.lwb.service.DishService;
 import pers.lwb.vo.DishVO;
 import pers.lwb.vo.PageVO;
@@ -31,7 +33,7 @@ public class DishServiceImpl implements DishService {
 
     private final SetmealDishMapper setmealDishMapper;
 
-    public DishServiceImpl(DishMapper dishMapper, DishFlavorMapper dishFlavorMapper, SetmealDishMapper setmealDishMapper) {
+    public DishServiceImpl(DishMapper dishMapper, DishFlavorMapper dishFlavorMapper, SetmealDishMapper setmealDishMapper, SetmealMapper setmealMapper) {
         this.dishMapper = dishMapper;
         this.dishFlavorMapper = dishFlavorMapper;
         this.setmealDishMapper = setmealDishMapper;
@@ -90,7 +92,7 @@ public class DishServiceImpl implements DishService {
         // 4. 删除菜品
         int n = dishMapper.delete(ids);
         if (n <= 0)
-            throw new DeleteException(MessageConstant.DISH_DELETE_ERROR);
+            throw new DeleteErrorException(MessageConstant.DISH_DELETE_ERROR);
     }
 
     @Override
@@ -134,9 +136,38 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public void setStatus(Long id, Integer status) {
-        int n = dishMapper.setStatus(id, status);
+        Dish dish = Dish.builder()
+                .id(id)
+                .status(status)
+                .build();
+
+        int n = dishMapper.update(dish);
         if (n <= 0)
             throw new UpdateException(MessageConstant.DISH_SET_STATUS_ERROR);
+    }
+
+    @Override
+    public List<DishVO> list(Long categoryId) {
+        DishPageDTO dishPageDTO = new DishPageDTO();
+        dishPageDTO.setCategoryId(categoryId);
+        dishPageDTO.setStatus(StatusConstant.ENABLE);
+
+        List<DishVO> dishes = dishMapper.list(dishPageDTO);
+        if (!dishes.isEmpty()) {
+            dishes.forEach(dish -> {
+                List<DishFlavor> flavors = dishFlavorMapper.getByDishId(dish.getId());
+                if (!flavors.isEmpty())
+                    dish.setFlavors(flavors);
+            });
+        }
+
+        return dishes;
+    }
+
+    @Override
+    public List<Dish> getByCategoryId(Long categoryId) {
+        List<Dish> dishes = dishMapper.getByCategoryId(categoryId);
+        return dishes;
     }
 }
 

@@ -1,5 +1,6 @@
 package pers.lwb.constant;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class MessageConstant {
     // 用户登录
     public static final String ACCOUNT_NOT_FOUND = "账号不存在！";
@@ -58,6 +59,25 @@ public class MessageConstant {
     public static final String FLAVOR_UPDATE_SUCCESS = "菜品口味修改成功！";
     public static final String FLAVOR_UPDATE_ERROR = "菜品口味修改失败！";
 
+    // 套餐相关操作
+    public static final String SETMEAL_INSERT_ERROR = "新增套餐失败！";
+    public static final String SETMEAL_INSERT_SUCCESS = "新增套餐成功！";
+    public static final String SETMEAL_DELETE_ERROR = "套餐删除失败！";
+    public static final String SETMEAL_DELETE_SUCCESS = "套餐删除成功！";
+    public static final String SETMEAL_UPDATE_SUCCESS = "套餐修改成功！";
+    public static final String SETMEAL_UPDATE_ERROR = "套餐修改失败！";
+    public static final String SETMEAL_ON_SALE = "启售中的套餐不能删除";
+    public static final String SETMEAL_SET_STATUS_SUCCESS = "套餐状态设置成功！";
+    public static final String SETMEAL_SET_STATUS_ERROR = "套餐状态设置失败！";
+
+    // 套餐菜品映射表操作
+    public static final String SETMEAL_DISH_INSERT_ERROR = "套餐菜品关联失败！";
+    public static final String SETMEAL_DISH_INSERT_SUCCESS = "套餐菜品关联成功！";
+    public static final String SETMEAL_DISH_DELETE_ERROR = "套餐和菜品关联信息删除失败！";
+    public static final String SETMEAL_DISH_DELETE_SUCCESS = "套餐删除成功！";
+    public static final String SETMEAL_DISH_UPDATE_SUCCESS = "套餐修改成功！";
+    public static final String SETMEAL_DISH_UPDATE_ERROR = "套餐修改失败！";
+
     // 店铺相关操作
     public static final String SHOP_SET_STATUS_SUCCESS = "成功设置店铺营业状态！";
     public static final String SHOP_SET_STATUS_ERROR = "设置店铺营业状态出错！";
@@ -71,7 +91,6 @@ public class MessageConstant {
     public static final String UPLOAD_FAILED = "文件上传失败！";
     public static final String SETMEAL_ENABLE_FAILED = "套餐内包含未启售菜品，无法启售";
     public static final String PASSWORD_EDIT_FAILED = "密码修改失败！";
-    public static final String SETMEAL_ON_SALE = "起售中的套餐不能删除";
     public static final String ORDER_STATUS_ERROR = "订单状态错误！";
     public static final String ORDER_NOT_FOUND = "订单不存在！";
 

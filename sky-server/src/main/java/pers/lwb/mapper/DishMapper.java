@@ -26,5 +26,5 @@ public interface DishMapper {
     @AutoFill(OperationType.UPDATE)
     int update(Dish dish);
 
-    int setStatus(Long id, Integer status);
+    List<Dish> getByCategoryId(Long categoryId);
 }

@@ -17,7 +17,7 @@ import java.util.List;
 
 @Tag(name = "Admin CategoryController")
 @Slf4j
-@RestController
+@RestController("adminCategoryController")
 @RequestMapping("/admin/category")
 public class CategoryController {
 
@@ -54,6 +54,7 @@ public class CategoryController {
     @Operation(summary = "编辑分类")
     @PutMapping
     public Result<String> update(@RequestBody CategoryDTO categoryDTO) {
+        log.info("编辑分类：{}", categoryDTO);
         categoryService.update(categoryDTO);
         return Result.success(MessageConstant.CATEGORY_UPDATE_SUCCESS);
     }
@@ -61,6 +62,7 @@ public class CategoryController {
     @Operation(summary = "启用/禁用分类")
     @PostMapping("/status/{status}")
     public Result<String> setStatus(Long id, @PathVariable("status") Integer status) {
+        log.info("{}分类：{}", status == 1 ? "启用" : "禁用", id);
         categoryService.setStatus(id, status);
         return Result.success(MessageConstant.CATEGORY_SET_STATUS_SUCCESS);
     }
@@ -68,6 +70,7 @@ public class CategoryController {
     @Operation(summary = "根据类型查询分类")
     @GetMapping("/list")
     public Result<List<Category>> list(Integer type) {
+        log.info("查询{}分类...", type == 1 ? "菜品" : "套餐");
         List<Category> categories = categoryService.list(type);
         return Result.success(categories);
     }

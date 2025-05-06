@@ -50,7 +50,6 @@ public class EmployeeController {
 
         HashMap<String, Object> claims = new HashMap<>();
         claims.put(JwtClaimsConstant.EMP_ID, employee.getId());
-
         String jwe = JwtUtils.createJwe(properties.getAdminSecretKey(), claims, properties.getAdminTtl());
 
         log.info("登录成功！生成 JWT令牌：{}", jwe);

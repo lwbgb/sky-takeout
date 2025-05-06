@@ -1,6 +1,5 @@
 package pers.lwb.entity;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,26 +9,29 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
-@Schema(title = "菜品类")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Dish {
+public class Setmeal {
 
     private Long id;
 
-    private String image;
-
-    private String name;
-
-    private BigDecimal price;
-
-    private Integer status;
-
-    @Schema(description = "1-菜品分类 2-套餐分类")
+    //分类id
     private Long categoryId;
 
+    //套餐名称
+    private String name;
+
+    //套餐价格
+    private BigDecimal price;
+
+    //状态 0:停用 1:启用
+    private Integer status;
+
+    //描述信息
     private String description;
+
+    private String image;
 
     private LocalDateTime createTime;
 

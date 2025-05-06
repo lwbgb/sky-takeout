@@ -70,7 +70,7 @@ public class JwtUtils {
         Date expiration = new Date(currentTimeMillis + seconds * 1000);
 
         String jwe = Jwts.builder()
-//                .claims(claims)
+                .claims(claims)
                 .encryptWith(password, alg, enc)
                 .expiration(expiration)
                 .compact();

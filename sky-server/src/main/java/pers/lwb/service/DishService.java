@@ -2,6 +2,7 @@ package pers.lwb.service;
 
 import pers.lwb.dto.DishDTO;
 import pers.lwb.dto.DishPageDTO;
+import pers.lwb.entity.Dish;
 import pers.lwb.vo.DishVO;
 import pers.lwb.vo.PageVO;
 
@@ -20,4 +21,8 @@ public interface DishService {
     DishVO getVOById(Long id);
 
     void setStatus(Long id, Integer status);
+
+    List<DishVO> list(Long categoryId);
+
+    List<Dish> getByCategoryId(Long categoryId);
 }
