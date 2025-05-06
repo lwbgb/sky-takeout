@@ -10,7 +10,7 @@ import pers.lwb.constant.RedisKeyConstant;
 import pers.lwb.exception.RedisOperationException;
 import pers.lwb.result.Result;
 
-@Tag(name = "userShopController")
+@Tag(name = "User ShopController")
 @Slf4j
 @RestController("userShopController")
 @RequestMapping("/user/shop")

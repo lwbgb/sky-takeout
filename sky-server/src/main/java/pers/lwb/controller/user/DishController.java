@@ -1,6 +1,8 @@
 package pers.lwb.controller.user;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,6 +12,8 @@ import pers.lwb.vo.DishVO;
 
 import java.util.List;
 
+@Slf4j
+@Tag(name = "User DishController")
 @RestController("userDishController")
 @RequestMapping("/user/dish")
 public class DishController {
@@ -23,7 +27,10 @@ public class DishController {
     @Operation(summary = "根据分类 id 查询菜品")
     @GetMapping("/list")
     public Result<List<DishVO>> list(Long categoryId) {
+        log.info("根据分类 id 查询菜品：{}", categoryId);
         List<DishVO> list = dishService.list(categoryId);
         return Result.success(list);
     }
+
+
 }
