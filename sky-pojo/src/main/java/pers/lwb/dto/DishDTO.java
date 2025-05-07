@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pers.lwb.entity.DishFlavor;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class DishDTO {
     private String name;
 
     @Schema(defaultValue = "18")
-    private double price;
+    private BigDecimal price;
 
     @Schema(defaultValue = "19", description = "1-菜品分类 2-套餐分类")
     private Long categoryId;

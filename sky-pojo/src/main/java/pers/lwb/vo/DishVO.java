@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pers.lwb.entity.DishFlavor;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +15,14 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DishVO {
+public class DishVO implements Serializable {
     private Long id;
 
     private String image;
 
     private String name;
 
-    private double price;
+    private BigDecimal price;
 
     private Integer status;
 

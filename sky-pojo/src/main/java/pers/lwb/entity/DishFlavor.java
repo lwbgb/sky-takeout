@@ -6,11 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @Schema(title = "菜品口味")
 @AllArgsConstructor
 @NoArgsConstructor
-public class DishFlavor {
+public class DishFlavor implements Serializable {
 
     private Long id;
 
