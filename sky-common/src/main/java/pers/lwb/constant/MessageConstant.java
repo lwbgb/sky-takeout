@@ -105,6 +105,20 @@ public class MessageConstant {
     public static final String ADDRESS_BOOK_SET_DEFAULT_SUCCESS = "用户默认地址设置成功！";
     public static final String ADDRESS_BOOK_SET_DEFAULT_ERROR = "用户默认地址设置失败！";
 
+    // 订单相关操作
+    public static final String ORDER_INSERT_ERROR = "新增订单失败！";
+    public static final String ORDER_INSERT_SUCCESS = "新增订单成功！";
+    public static final String ORDER_DELETE_SUCCESS = "删除订单成功！";
+    public static final String ORDER_DELETE_ERROR = "删除订单失败！";
+    public static final String ORDER_UPDATE_ERROR = "订单信息更新失败！";
+    public static final String ORDER_UPDATE_SUCCESS = "订单信息更新成功！";
+    public static final String ORDER_SET_STATUS_SUCCESS = "订单状态设置成功！";
+    public static final String ORDER_SET_STATUS_ERROR = "订单状态设置失败！";
+    public static final String ORDER_BE_RELATED_BY_SETMEAL = "当前菜品关联了套餐,不能删除!";
+    public static final String ORDER_ON_SALE = "无法删除启售中的菜品!";
+    public static final String ORDER_NOT_FOUND = "订单不存在！";
+
+
     public static final String UNKNOWN_ERROR = "未知错误！";
     public static final String SHOPPING_CART_IS_NULL = "购物车数据为空，不能下单";
     public static final String ADDRESS_BOOK_IS_NULL = "用户地址为空，不能下单";
@@ -112,7 +126,6 @@ public class MessageConstant {
     public static final String SETMEAL_ENABLE_FAILED = "套餐内包含未启售菜品，无法启售";
     public static final String PASSWORD_EDIT_FAILED = "密码修改失败！";
     public static final String ORDER_STATUS_ERROR = "订单状态错误！";
-    public static final String ORDER_NOT_FOUND = "订单不存在！";
 
     // 其他
     public static final String METHOD_NOT_FOUND = "未找到该方法：";
