@@ -95,6 +95,16 @@ public class MessageConstant {
     public static final String SHOPPING_CART_SET_STATUS_SUCCESS = "套餐状态设置成功！";
     public static final String SHOPPING_CART_SET_STATUS_ERROR = "套餐状态设置失败！";
 
+    // 用户地址相关操作
+    public static final String ADDRESS_BOOK_INSERT_ERROR = "用户地址新增失败！";
+    public static final String ADDRESS_BOOK_INSERT_SUCCESS = "用户地址新增成功！";
+    public static final String ADDRESS_BOOK_DELETE_ERROR = "用户地址删除失败！";
+    public static final String ADDRESS_BOOKT_DELETE_SUCCESS = "用户地址删除成功！";
+    public static final String ADDRESS_BOOK_UPDATE_ERROR = "用户地址更新失败！";
+    public static final String ADDRESS_BOOK_UPDATE_SUCCESS = "用户地址更新成功！";
+    public static final String ADDRESS_BOOK_SET_DEFAULT_SUCCESS = "用户默认地址设置成功！";
+    public static final String ADDRESS_BOOK_SET_DEFAULT_ERROR = "用户默认地址设置失败！";
+
     public static final String UNKNOWN_ERROR = "未知错误！";
     public static final String SHOPPING_CART_IS_NULL = "购物车数据为空，不能下单";
     public static final String ADDRESS_BOOK_IS_NULL = "用户地址为空，不能下单";
