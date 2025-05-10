@@ -83,7 +83,17 @@ public class MessageConstant {
     public static final String SHOP_SET_STATUS_ERROR = "设置店铺营业状态出错！";
     public static final String SHOP_GET_STATUS_ERROR = "获取店铺营业状态出错！";
 
-
+    // 购物车相关操作
+    public static final String SHOPPING_CART_INSERT_ERROR = "购物车添加商品失败！";
+    public static final String SHOPPING_CART_INSERT_SUCCESS = "购物车添加商品成功！";
+    public static final String SHOPPING_CART_DELETE_ERROR = "购物车删除商品失败！";
+    public static final String SHOPPING_CART_DELETE_SUCCESS = "购物车删除商品成功！";
+    public static final String SHOPPING_CART_CLEAN_ERROR = "购物车为空！";
+    public static final String SHOPPING_CART_CLEAN_SUCCESS = "成功清空购物车！";
+    public static final String SHOPPING_CART_UPDATE_ERROR = "购物车更新失败！";
+    public static final String SHOPPING_CART_ON_SALE = "启售中的套餐不能删除";
+    public static final String SHOPPING_CART_SET_STATUS_SUCCESS = "套餐状态设置成功！";
+    public static final String SHOPPING_CART_SET_STATUS_ERROR = "套餐状态设置失败！";
 
     public static final String UNKNOWN_ERROR = "未知错误！";
     public static final String SHOPPING_CART_IS_NULL = "购物车数据为空，不能下单";
