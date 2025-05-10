@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
 import pers.lwb.constant.MessageConstant;
 import pers.lwb.dto.SetmealDTO;
@@ -29,6 +30,7 @@ public class SetmealController {
     }
 
     @Operation(summary = "新增套餐")
+    @CacheEvict(cacheNames = "setmealCache", key = "#setmealDTO.categoryId")
     @PostMapping
     public Result<String> insert(@RequestBody SetmealDTO setmealDTO) {
         log.info("新增套餐：{}", setmealDTO);
@@ -53,6 +55,7 @@ public class SetmealController {
     }
 
     @Operation(summary = "批量删除套餐")
+    @CacheEvict(cacheNames = "setmealCache", allEntries = true)
     @DeleteMapping
     public Result<String> delete(@RequestParam List<Long> ids) {
         log.info("批量删除套餐：{}", ids);
@@ -61,6 +64,7 @@ public class SetmealController {
     }
 
     @Operation(summary = "修改套餐")
+    @CacheEvict(cacheNames = "setmealCache", allEntries = true)
     @PutMapping
     public Result<String> update(@RequestBody SetmealDTO setmealDTO) {
         log.info("修改套餐信息：{}", setmealDTO);
@@ -69,6 +73,7 @@ public class SetmealController {
     }
 
     @Operation(summary = "启售/禁售套餐")
+    @CacheEvict(cacheNames = "setmealCache", allEntries = true)
     @PostMapping("status/{status}")
     public Result<String> setStatus(Long id, @PathVariable Integer status) {
         log.info("{}套餐：{}", status == 1 ? "启售" : "禁售", id);

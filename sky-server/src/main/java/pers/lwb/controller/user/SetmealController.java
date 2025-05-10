@@ -3,6 +3,7 @@ package pers.lwb.controller.user;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,7 @@ public class SetmealController {
     }
 
     @Operation(summary = "根据分类 id 查询套餐")
+    @Cacheable(cacheNames = "setmealCache", key = "#categoryId")
     @GetMapping("/list")
     public Result<List<Setmeal>> list(Long categoryId) {
         List<Setmeal> setmeals = setmealService.list(categoryId);

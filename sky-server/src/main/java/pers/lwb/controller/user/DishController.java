@@ -41,11 +41,9 @@ public class DishController {
         if (list != null && !list.isEmpty()) {
             return Result.success(list);
         }
-        // 3. 没有缓存信息则查询数据库
+        // 3. 没有缓存信息则查询数据库，并将数据存入缓存
         list = dishService.list(categoryId);
         redisTemplate.opsForValue().set(key, list);
         return Result.success(list);
     }
-
-
 }
