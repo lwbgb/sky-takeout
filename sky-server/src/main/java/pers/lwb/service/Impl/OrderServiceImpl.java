@@ -1,23 +1,22 @@
 package pers.lwb.service.Impl;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pers.lwb.constant.MessageConstant;
 import pers.lwb.context.LocalContext;
 import pers.lwb.dto.OrderSubmitDTO;
-import pers.lwb.entity.AddressBook;
-import pers.lwb.entity.OrderDetail;
-import pers.lwb.entity.Orders;
-import pers.lwb.entity.ShoppingCart;
+import pers.lwb.dto.OrdersPaymentDTO;
+import pers.lwb.entity.*;
 import pers.lwb.exception.*;
-import pers.lwb.mapper.AddressBookMapper;
-import pers.lwb.mapper.OrderDetailMapper;
-import pers.lwb.mapper.OrderMapper;
-import pers.lwb.mapper.ShoppingCartMapper;
+import pers.lwb.mapper.*;
 import pers.lwb.service.OrderService;
+import pers.lwb.utils.WeChatPayUtil;
+import pers.lwb.vo.OrderPaymentVO;
 import pers.lwb.vo.OrderSubmitVO;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +32,17 @@ public class OrderServiceImpl implements OrderService {
 
     private final ShoppingCartMapper shoppingCartMapper;
 
-    public OrderServiceImpl(OrderMapper orderMapper, OrderDetailMapper orderDetailMapper, AddressBookMapper addressBookMapper, ShoppingCartMapper shoppingCartMapper) {
+    private final UserMapper userMapper;
+
+    private final WeChatPayUtil weChatPayUtil;
+
+    public OrderServiceImpl(OrderMapper orderMapper, OrderDetailMapper orderDetailMapper, AddressBookMapper addressBookMapper, ShoppingCartMapper shoppingCartMapper, UserMapper userMapper, WeChatPayUtil weChatPayUtil) {
         this.orderMapper = orderMapper;
         this.orderDetailMapper = orderDetailMapper;
         this.addressBookMapper = addressBookMapper;
         this.shoppingCartMapper = shoppingCartMapper;
+        this.userMapper = userMapper;
+        this.weChatPayUtil = weChatPayUtil;
     }
 
     @Override
@@ -71,7 +76,6 @@ public class OrderServiceImpl implements OrderService {
                         addressBook.getDistrictName() + addressBook.getDetail())
 //                .userName(addressBook.)
                 .consignee(addressBook.getConsignee())
-//                .deliveryTime()
                 .build();
         BeanUtils.copyProperties(orderSubmitDTO, orders);
         int n = orderMapper.insert(orders);
@@ -107,5 +111,44 @@ public class OrderServiceImpl implements OrderService {
                 .orderAmount(orders.getAmount())
                 .build();
         return orderSubmitVO;
+    }
+
+    public OrderPaymentVO payment(OrdersPaymentDTO ordersPaymentDTO) throws Exception {
+        // 当前登录用户id
+        Long userId = LocalContext.getCurrentId();
+        User user = userMapper.getById(userId);
+
+        //调用微信支付接口，生成预支付交易单
+        JSONObject jsonObject = weChatPayUtil.pay(
+                ordersPaymentDTO.getOrderNumber(),
+                new BigDecimal(0.01),
+                "苍穹外卖订单",
+                user.getOpenid()
+        );
+
+        if (jsonObject.getString("code") != null && jsonObject.getString("code").equals("ORDERPAID")) {
+            throw new OrderBusinessException("该订单已支付");
+        }
+
+        OrderPaymentVO vo = jsonObject.toJavaObject(OrderPaymentVO.class);
+        vo.setPackageStr(jsonObject.getString("package"));
+
+        return vo;
+    }
+
+    public void paySuccess(String outTradeNo) {
+
+        // 根据订单号查询订单
+        Orders ordersDB = orderMapper.getByNumber(outTradeNo);
+
+        // 根据订单id更新订单的状态、支付方式、支付状态、结账时间
+        Orders orders = Orders.builder()
+                .id(ordersDB.getId())
+                .status(Orders.TO_BE_CONFIRMED)
+                .payStatus(Orders.PAID)
+                .checkoutTime(LocalDateTime.now())
+                .build();
+
+        orderMapper.update(orders);
     }
 }

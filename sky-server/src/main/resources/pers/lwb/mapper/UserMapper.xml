@@ -24,4 +24,9 @@
         <include refid="selectAll"/>
         where openid = #{openid}
     </select>
+
+    <select id="getById" resultType="pers.lwb.entity.User">
+        <include refid="selectAll"/>
+        where id = #{id}
+    </select>
 </mapper>

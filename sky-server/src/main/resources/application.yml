@@ -75,3 +75,11 @@ aliyun:
 wechat:
   appid: ${wechat.appid}
   secret: ${wechat.secret}
+  mchid: ${wechat.mchid}
+  mch-serial-no: ${wechat.mch-serial-no}
+  private-key-file-path: ${wechat.mch-serial-no}
+  api-v3-key: ${wechat.api-v3-key}
+  we-chat-pay-cert-file-path: ${wechat.we-chat-pay-cert-file-path}
+  notify-url: ${wechat.notify-url}
+  refund-notify-url: ${wechat.refund-notify-url}
+

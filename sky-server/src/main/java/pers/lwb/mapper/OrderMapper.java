@@ -8,5 +8,7 @@ public interface OrderMapper {
 
     int insert(Orders orders);
 
+    Orders getByNumber(String orderNumber);
 
+    int update(Orders orders);
 }

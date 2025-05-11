@@ -50,7 +50,6 @@ public class MessageConstant {
     public static final String DISH_ON_SALE = "无法删除启售中的菜品!";
     public static final String DISH_NOT_FOUND = "菜品不存在！";
 
-
     // 口味相关操作
     public static final String FLAVOR_INSERT_ERROR = "新增口味失败！";
     public static final String FLAVOR_INSERT_SUCCESS = "新增口味成功！";
