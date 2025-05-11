@@ -60,4 +60,10 @@
         <include refid="selectAll"/>
         where number = #{orderNumber}
     </select>
+
+    <select id="getByStatusAndOrderTimeLT" resultType="pers.lwb.entity.Orders">
+        <include refid="selectAll"/>
+        where status = #{status}
+        and order_time <![CDATA[ < ]]> #{orderTime}
+    </select>
 </mapper>

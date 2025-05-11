@@ -116,6 +116,7 @@ public class MessageConstant {
     public static final String ORDER_BE_RELATED_BY_SETMEAL = "当前菜品关联了套餐,不能删除!";
     public static final String ORDER_ON_SALE = "无法删除启售中的菜品!";
     public static final String ORDER_NOT_FOUND = "订单不存在！";
+    public static final String ORDER_TIME_OUT = "订单已超时！自动取消订单！";
 
 
     public static final String UNKNOWN_ERROR = "未知错误！";
